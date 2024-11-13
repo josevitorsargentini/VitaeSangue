@@ -1,5 +1,6 @@
 package ifsp.vitaesangue.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,8 +9,10 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Estabelecimento {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "estabelecimento_id")
     private Long id;
 	
 	private String nome; 
@@ -27,7 +30,6 @@ public class Estabelecimento {
         this.email = email;
         this.endereco = endereco;
         this.ativo = ativo;
-        
     }
     
     public Long getId() {
