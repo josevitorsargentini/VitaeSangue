@@ -1,0 +1,5 @@
+# Ignorar arquivos gerados pelo Gradle
+.gradle/
+
+# Ignorar configurações específicas do Eclipse
+.settings/
