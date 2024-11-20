@@ -2,8 +2,8 @@
 -- Inserindo dados na tabela solicitacao_acesso
 insert into solicitacao_acesso (nome, email, cep, cidade, estado, bairro, logradouro, numero, ddd, numero_telefone, tipo_estabelecimento, cnes, tipo_hospital, diretor_responsavel, ativo) 
 values 
-('Hospital', 'hospital@teste.com', '12345-678', 'Araraquara', 'Sao Paulo', 'Teste', 'Rua Teste', '123', 11, 123456789, 'hospital', '1234567', 'privado', 'Dr. Teste da Silva', true),
-('Hemocentro Araraquara', 'hemocentro@araraquara.com', '98765-432', 'Araraquara', 'Sao Paulo', 'Teste', 'Rua Teste', '456', 21, 987654321, 'hemocentro', null, null, null, true);
+('Hospital', 'hospital@teste.com', '12345-678', 'Araraquara', 'Sao Paulo', 'Teste', 'Rua Teste', '123', 11, 123456789, 'HOSPITAL', '1234567', 'PRIVADO', 'Dr. Teste da Silva', true),
+('Hemocentro Araraquara', 'hemocentro@araraquara.com', '98765-432', 'Araraquara', 'Sao Paulo', 'Teste', 'Rua Teste', '456', 21, 987654321, 'HEMOCENTRO', null, null, null, true);
 
 -- Inserindo dados na tabela estabelecimento
 insert into estabelecimento (nome, email, cep, cidade, estado, bairro, logradouro, numero, ativo) 
@@ -25,7 +25,7 @@ values
 -- Inserindo dados na tabela hospital
 insert into hospital (estabelecimento_id, cnes, tipo, diretor_responsavel) 
 values 
-(1, '1234567', 'privado', 'Dr. Teste da Silva');
+(1, '1234567', 'PRIVADO', 'Dr. Teste da Silva');
 
 -- Inserindo dados na tabela perfil
 insert into perfil (nome) 

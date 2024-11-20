@@ -10,9 +10,9 @@ create table solicitacao_acesso (
     numero varchar(10) not null,
     ddd int,
     numero_telefone int,
-    tipo_estabelecimento varchar(20) not null check (tipo_estabelecimento in ('hospital', 'hemocentro')),
+    tipo_estabelecimento varchar(20) not null check (tipo_estabelecimento in ('HOSPITAL', 'HEMOCENTRO')),
     cnes varchar(7),
-    tipo_hospital varchar(20) check (tipo_hospital in ('publico', 'privado', 'filantropico')),
+    tipo_hospital varchar(20) check (tipo_hospital in ('PUBLICO', 'PRIVADO', 'FILANTROPICO')),
     diretor_responsavel varchar(80),
     ativo boolean
 );
@@ -54,7 +54,7 @@ create table hospital (
 	hospital_id int primary key auto_increment, 
 	estabelecimento_id int not null,
     cnes varchar(7) unique not null, 
-    tipo varchar(20) check (tipo in ('publico', 'privado', 'filantropico')) not null,
+    tipo varchar(20) check (tipo in ('PUBLICO', 'PRIVADO', 'FILANTROPICO')) not null,
     diretor_responsavel varchar(80) not null,
 	FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimento(estabelecimento_id) on update cascade
 );  
