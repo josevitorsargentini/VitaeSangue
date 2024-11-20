@@ -1,30 +1,33 @@
 package ifsp.vitaesangue.model;
 
+import ifsp.vitaesangue.listener.HistoricoListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
+@EntityListeners(HistoricoListener.class) 
 @Table(name = "perfil")
 public class Perfil {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "perfil_id")
-    private Long perfilId;
+    private Long id;
 
     @Column(name = "nome")
     private String nome;
 
-    public Long getPerfilId() {
-        return perfilId;
+    public Long getId() {
+        return id;
     }
 
-    public void setPerfilId(Long perfilId) {
-        this.perfilId = perfilId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {

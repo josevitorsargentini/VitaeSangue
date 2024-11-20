@@ -49,7 +49,7 @@ public class UsuarioController {
 	
 		usuario.setEstabelecimento(estabelecimento);
 		
-		Perfil perfil = perfilRepository.findById(usuario.getPerfil().getPerfilId())
+		Perfil perfil = perfilRepository.findById(usuario.getPerfil().getId())
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado"));
 	
 		usuario.setPerfil(perfil);

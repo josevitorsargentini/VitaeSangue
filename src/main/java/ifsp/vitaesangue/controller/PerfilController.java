@@ -42,7 +42,7 @@ public class PerfilController {
 	@PutMapping()
 	public Perfil edit(@RequestBody Perfil perfil) {
 	    
-	    return perfilRepository.findById(perfil.getPerfilId())
+	    return perfilRepository.findById(perfil.getId())
 	      .map(perfilEntity -> {
 	    	perfilEntity.setNome(perfil.getNome());
 	        return perfilRepository.save(perfilEntity);
