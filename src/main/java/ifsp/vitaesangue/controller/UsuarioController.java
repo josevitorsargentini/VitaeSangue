@@ -61,7 +61,7 @@ public class UsuarioController {
 	@PutMapping()
 	public Usuario edit(@RequestBody Usuario usuario) {
 	    
-	    return usuarioRepository.findById(usuario.getUsuarioId())
+	    return usuarioRepository.findById(usuario.getId())
 	      .map(usuarioEntity -> {
 	    	 usuarioEntity.setNome(usuario.getNome());
 	        return usuarioRepository.save(usuarioEntity);

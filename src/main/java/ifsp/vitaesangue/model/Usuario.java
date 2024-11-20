@@ -17,7 +17,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usuario_id")
-    private Long usuarioId;
+    private Long id;
 
     @Column(name = "cpf")
     private String cpf;
@@ -51,12 +51,12 @@ public class Usuario {
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCpf() {
@@ -115,7 +115,15 @@ public class Usuario {
         this.whatsapp = whatsapp;
     }
 
-    public Estabelecimento getEstabelecimento() {
+    public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public Estabelecimento getEstabelecimento() {
         return estabelecimento;
     }
 
