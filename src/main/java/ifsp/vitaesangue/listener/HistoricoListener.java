@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import ifsp.vitaesangue.model.Historico;
 import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.repository.HistoricoRepository;
+import ifsp.vitaesangue.repository.UsuarioRepository;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PostRemove;
 import jakarta.persistence.PostUpdate;
@@ -20,10 +21,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HistoricoListener {
 	private HistoricoRepository historicoRepository;
+	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
-	public HistoricoListener(@Lazy HistoricoRepository historicoRepository) {
+	public HistoricoListener(@Lazy HistoricoRepository historicoRepository, @Lazy UsuarioRepository usuarioRepository) {
 	    this.historicoRepository = historicoRepository;
+	    this.usuarioRepository = usuarioRepository;
 	}
 	
 	@PostPersist
@@ -48,7 +51,7 @@ public class HistoricoListener {
             historico.setNomeTabela(getNomeTabela(entidade));
             historico.setRegistroId(getRegistroId(entidade));
             historico.setAcao(TipoAcaoHistorico.valueOf(acao));
-            historico.setUsuarioId(1l);
+            historico.setUsuario(usuarioRepository.getById(1l));
             
             historicoRepository.save(historico);
         } catch (Exception e) {

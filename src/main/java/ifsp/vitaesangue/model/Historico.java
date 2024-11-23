@@ -10,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
@@ -32,8 +34,9 @@ public class Historico {
 	@Enumerated(EnumType.STRING)  
 	private TipoAcaoHistorico acao;
 	
-	@Column(name = "usuario_id")
-	private Long usuarioId;
+	@ManyToOne(targetEntity = Usuario.class)
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
 	
 	@Column(name = "dt_historico")
 	private Date dtHistorico;
@@ -75,12 +78,12 @@ public class Historico {
 		this.acao = acao;
 	}
 
-	public Long getUsuarioId() {
-		return usuarioId;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuarioId(Long usuarioId) {
-		this.usuarioId = usuarioId;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Date getDtHistorico() {
