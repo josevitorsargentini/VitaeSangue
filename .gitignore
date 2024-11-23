@@ -3,3 +3,6 @@
 
 # Ignorar configurações específicas do Eclipse
 .settings/
+
+# Ignorar a pasta bin
+bin/
