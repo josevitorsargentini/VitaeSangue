@@ -11,22 +11,6 @@ values
 ('Hospital', 'hospital@teste.com', '12345-678', 'Araraquara', 'Sao Paulo', 'Teste', 'Rua Teste', '123', true),
 ('Hemocentro Araraquara', 'hemocentro@araraquara.com',  '98765-432', 'Araraquara', 'Sao Paulo', 'Teste', 'Rua Teste', '456', true);
 
--- Inserindo dados na tabela telefone
-insert into telefone (estabelecimento_id, ddd, numero, whatsapp, descricao) 
-values 
-(1, 11, 123456789, true, 'Telefone principal'),
-(2, 21, 987654321, false, 'Telefone secundário');
-
--- Inserindo dados na tabela hemocentro
-insert into hemocentro (estabelecimento_id) 
-values 
-(2);
-
--- Inserindo dados na tabela hospital
-insert into hospital (estabelecimento_id, cnes, tipo, diretor_responsavel) 
-values 
-(1, '1234567', 'PRIVADO', 'Dr. Teste da Silva');
-
 -- Inserindo dados na tabela perfil
 insert into perfil (nome) 
 values 
@@ -40,10 +24,27 @@ values
 (2, 'usuario', '/usuario', false, true, false);
 
 -- Inserindo dados na tabela usuario
-insert into usuario (cpf, nome, email, senha, ddd, telefone, whatsapp, cep, cidade, estado, bairro, logradouro, numero, estabelecimento_id, perfil_id) 
+insert into usuario (cpf, nome, email, senha, cep, cidade, estado, bairro, logradouro, numero, estabelecimento_id, perfil_id) 
 values 
-('12345678901', 'João Silva', 'joao@exemplo.com', 'senha123', 11, 123456789, true, '12345-678', 'Cidade A', 'Sao Paulo', 'Bairro A', 'Rua A', '123', 1, 1),
-('98765432100', 'Maria Oliveira', 'maria@exemplo.com', 'senha456', 21, 987654321, false, '98765-432', 'Cidade B', 'Sao Paulo', 'Bairro B', 'Rua B', '456', 2, 2);
+('12345678901', 'João Silva', 'joao@exemplo.com', 'senha123', '12345-678', 'Cidade A', 'Sao Paulo', 'Bairro A', 'Rua A', '123', 1, 1),
+('98765432100', 'Maria Oliveira', 'maria@exemplo.com', 'senha456', '98765-432', 'Cidade B', 'Sao Paulo', 'Bairro B', 'Rua B', '456', 2, 2);
+
+-- Inserindo dados na tabela telefone
+INSERT INTO telefone (estabelecimento_id, usuario_id, ddd, numero, whatsapp, descricao)
+VALUES (1, NULL, 11, 123456789, TRUE, 'Telefone principal');
+
+INSERT INTO telefone (estabelecimento_id, usuario_id, ddd, numero, whatsapp, descricao)
+VALUES (NULL, 1, 21, 987654321, FALSE, 'Telefone de contato');
+
+-- Inserindo dados na tabela hemocentro
+insert into hemocentro (estabelecimento_id) 
+values 
+(2);
+
+-- Inserindo dados na tabela hospital
+insert into hospital (estabelecimento_id, cnes, tipo, diretor_responsavel) 
+values 
+(1, '1234567', 'PRIVADO', 'Dr. Teste da Silva');
 
 -- Inserindo dados na tabela contrato
 insert into contrato (hospital_id, hemocentro_id, dt_inicio, dt_fim, usuario_requerimento, usuario_requerido, qtd_sangue_mensal) 

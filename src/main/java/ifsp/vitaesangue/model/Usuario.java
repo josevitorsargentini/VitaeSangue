@@ -1,8 +1,10 @@
 package ifsp.vitaesangue.model;
 
+import ifsp.vitaesangue.listener.HistoricoListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,9 +13,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
+@EntityListeners(HistoricoListener.class) 
 @Table(name = "usuario")
 public class Usuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usuario_id")
@@ -30,15 +32,6 @@ public class Usuario {
 
     @Column(name = "senha")
     private String senha;
-
-    @Column(name = "ddd")
-    private Integer ddd;
-
-    @Column(name = "telefone")
-    private Integer telefone;
-
-    @Column(name = "whatsapp")
-    private Boolean whatsapp;
 
     @Embedded
     private Endereco endereco;
@@ -89,30 +82,6 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public Integer getDdd() {
-        return ddd;
-    }
-
-    public void setDdd(Integer ddd) {
-        this.ddd = ddd;
-    }
-
-    public Integer getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(Integer telefone) {
-        this.telefone = telefone;
-    }
-
-    public Boolean getWhatsapp() {
-        return whatsapp;
-    }
-
-    public void setWhatsapp(Boolean whatsapp) {
-        this.whatsapp = whatsapp;
     }
 
     public Endereco getEndereco() {

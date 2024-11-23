@@ -31,34 +31,6 @@ create table estabelecimento (
     ativo boolean
 );
 
-drop table if exists telefone;
-create table telefone (
-	telefone_id int primary key auto_increment,
-	estabelecimento_id int,
-    ddd int not null,
-    numero int not null,
-    whatsapp boolean, 
-    descricao varchar(80),
-	FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimento(estabelecimento_id) on update cascade
-);
-
-drop table if exists hemocentro;
-create table hemocentro (
-	hemocentro_id int primary key auto_increment,
-	estabelecimento_id int,
-	FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimento(estabelecimento_id) on update cascade
-);
-
-drop table if exists hospital;
-create table hospital (
-	hospital_id int primary key auto_increment, 
-	estabelecimento_id int not null,
-    cnes varchar(7) unique not null, 
-    tipo varchar(20) check (tipo in ('PUBLICO', 'PRIVADO', 'FILANTROPICO')) not null,
-    diretor_responsavel varchar(80) not null,
-	FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimento(estabelecimento_id) on update cascade
-);  
-
 drop table if exists perfil;
 create table perfil (
 	perfil_id int primary key auto_increment,
@@ -84,9 +56,6 @@ create table usuario (
     nome varchar(80) not null,
     email varchar(80) not null,
     senha varchar(250) not null,
-    ddd int,
-    telefone int,
-    whatsapp boolean,
 	cep varchar(9) not null,
     cidade varchar(40) not null,
     estado varchar(40) not null,
@@ -98,6 +67,36 @@ create table usuario (
 	FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimento(estabelecimento_id) on update cascade,
     FOREIGN KEY (perfil_id) REFERENCES perfil(perfil_id) on update cascade
 ); 
+
+drop table if exists telefone;
+create table telefone (
+	telefone_id int primary key auto_increment,
+	estabelecimento_id int,
+	usuario_id int,
+    ddd int not null,
+    numero int not null,
+    whatsapp boolean, 
+    descricao varchar(80),
+	FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimento(estabelecimento_id) on update cascade,
+	FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) on update cascade
+);
+
+drop table if exists hemocentro;
+create table hemocentro (
+	hemocentro_id int primary key auto_increment,
+	estabelecimento_id int,
+	FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimento(estabelecimento_id) on update cascade
+);
+
+drop table if exists hospital;
+create table hospital (
+	hospital_id int primary key auto_increment, 
+	estabelecimento_id int not null,
+    cnes varchar(7) unique not null, 
+    tipo varchar(20) check (tipo in ('PUBLICO', 'PRIVADO', 'FILANTROPICO')) not null,
+    diretor_responsavel varchar(80) not null,
+	FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimento(estabelecimento_id) on update cascade
+);  
 
 drop table if exists contrato;
 create table contrato (

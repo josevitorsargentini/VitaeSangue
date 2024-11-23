@@ -1,25 +1,34 @@
 package ifsp.vitaesangue.model;
 
+import ifsp.vitaesangue.listener.HistoricoListener;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@EntityListeners(HistoricoListener.class) 
+@Table(name = "telefone")
 public class Telefone {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "telefone_id")
-	private Long telefoneId;
+	private Long id;
 	
-	@OneToOne(cascade  = CascadeType.ALL)
-	@JoinColumn(name = "estabelecimento_id") 
+	@ManyToOne(cascade  = CascadeType.ALL)
+	@JoinColumn(name = "estabelecimento_id", nullable = true) 
 	private Estabelecimento estabelecimento;
+	
+	@ManyToOne(cascade  = CascadeType.ALL)
+	@JoinColumn(name = "usuario_id", nullable = true) 
+	private Usuario usuario;
 	
 	private int ddd;
 	
@@ -29,12 +38,12 @@ public class Telefone {
 	
 	private String descricao;
 
-	public Long getTelefoneId() {
-		return telefoneId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setTelefoneId(Long telefoneId) {
-		this.telefoneId = telefoneId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Estabelecimento getEstabelecimento() {
@@ -43,6 +52,14 @@ public class Telefone {
 
 	public void setEstabelecimento(Estabelecimento estabelecimento) {
 		this.estabelecimento = estabelecimento;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public int getDdd() {
