@@ -17,7 +17,7 @@ public class Hospital {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "hospital_id")
-	private Long hospitalId;
+	private Long id;
 
 	private String cnes;
 
@@ -31,12 +31,12 @@ public class Hospital {
 	@JoinColumn(name = "estabelecimento_id") 
 	private Estabelecimento estabelecimento;
 
-	public Long getHospitalId() {
-		return hospitalId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setHospitalId(Long hospitalId) {
-		this.hospitalId = hospitalId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Estabelecimento getEstabelecimento() {
