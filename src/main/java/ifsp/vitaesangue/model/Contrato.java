@@ -1,5 +1,6 @@
 package ifsp.vitaesangue.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import ifsp.vitaesangue.listener.HistoricoListener;
@@ -38,10 +39,10 @@ public class Contrato {
 	private Usuario usuarioRequerido;
 	
 	@Column(name = "dt_inicio")
-	private LocalDateTime inicio;
+	private LocalDate inicio;
 	
 	@Column(name = "dt_fim")
-	private LocalDateTime vencimento;
+	private LocalDate vencimento;
 	
 	@Column(name = "qtd_sangue_mensal")
 	private Integer quantidadeSangue; 
@@ -86,7 +87,7 @@ public class Contrato {
 		this.usuarioRequerido = usuarioRequerido;
 	}
 
-	public LocalDateTime getInicio() {
+	public LocalDate getInicio() {
 		return inicio;
 	}
 
@@ -94,7 +95,7 @@ public class Contrato {
 		this.inicio = inicio;
 	}
 
-	public LocalDateTime getVencimento() {
+	public LocalDate getVencimento() {
 		return vencimento;
 	}
 
