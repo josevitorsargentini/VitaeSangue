@@ -14,7 +14,7 @@ public class Utilizacao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "utilizacao_id")
-	private Long utilizacaoId;
+	private Long id;
 	
 	@Column(name = "nome_paciente")
 	private String nomePaciente;
@@ -29,12 +29,12 @@ public class Utilizacao {
 	@Column(name = "cod_profisional_retirante")
 	private String codProfissionalRetirante;
 
-	public Long getUtilizacaoId() {
-		return utilizacaoId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setUtilizacaoId(Long utilizacaoId) {
-		this.utilizacaoId = utilizacaoId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNomePaciente() {

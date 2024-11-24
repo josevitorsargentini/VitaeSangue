@@ -14,7 +14,7 @@ public class Descarte {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "descarte_id")
-    private int descarteId;
+    private Long id;
 
     @Column(name = "nome_profissional")
     private String nomeProfissional;
@@ -27,12 +27,12 @@ public class Descarte {
     @Column(name = "dt_descarte")
     private LocalDateTime dtDescarte;
 
-	public int getDescarteId() {
-		return descarteId;
+	public long getId() {
+		return id;
 	}
 
-	public void setDescarteId(int descarteId) {
-		this.descarteId = descarteId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNomeProfissional() {

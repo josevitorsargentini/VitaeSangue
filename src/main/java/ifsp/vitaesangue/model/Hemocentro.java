@@ -15,18 +15,18 @@ public class Hemocentro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "hemocentro_id")
-	private Long hemocentroId;
+	private Long id;
 	
 	@OneToOne(cascade  = CascadeType.ALL)
 	@JoinColumn(name = "estabelecimento_id")
 	private Estabelecimento estabelecimento;
 
-	public Long getHemocentroId() {
-		return hemocentroId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setHemocentroId(Long hemocentroId) {
-		this.hemocentroId = hemocentroId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Estabelecimento getEstabelecimento() {

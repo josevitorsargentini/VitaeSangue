@@ -17,7 +17,7 @@ public class Permissao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "permissao_id")
-    private Long permissaoId;
+    private Long id;
 
     @ManyToOne(targetEntity = Perfil.class)
     @JoinColumn(name = "perfil_id")
@@ -38,12 +38,12 @@ public class Permissao {
     @Column(name = "atualizacao")
     private Boolean atualizacao;
 
-    public Long getPermissaoId() {
-        return permissaoId;
+    public Long getId() {
+        return id;
     }
 
-    public void setPermissaoId(Long permissaoId) {
-        this.permissaoId = permissaoId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Perfil getPerfil() {

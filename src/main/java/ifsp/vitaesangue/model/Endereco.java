@@ -12,8 +12,6 @@ public class Endereco {
     private String logradouro;
     private String numero;
 
-
-
     public String getCep() {
         return cep;
     }
