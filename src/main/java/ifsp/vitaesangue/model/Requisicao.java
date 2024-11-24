@@ -36,7 +36,7 @@ public class Requisicao {
     @JoinColumn(name = "usuario_requerido")
     private Usuario usuarioRequerido;
 
-    @Column(name = "situacao", length = 30)
+    @Column(name = "situacao")
     private String situacao;
 
     public Long getId() {
