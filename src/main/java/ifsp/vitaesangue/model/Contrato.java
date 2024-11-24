@@ -91,7 +91,7 @@ public class Contrato {
 		return inicio;
 	}
 
-	public void setInicio(LocalDateTime inicio) {
+	public void setInicio(LocalDate inicio) {
 		this.inicio = inicio;
 	}
 
@@ -99,7 +99,7 @@ public class Contrato {
 		return vencimento;
 	}
 
-	public void setVencimento(LocalDateTime vencimento) {
+	public void setVencimento(LocalDate vencimento) {
 		this.vencimento = vencimento;
 	}
 
