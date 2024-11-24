@@ -1,8 +1,10 @@
 package ifsp.vitaesangue.model;
 
+import ifsp.vitaesangue.listener.HistoricoListener;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@EntityListeners(HistoricoListener.class) 
 public class Hospital {
 
 	@Id
