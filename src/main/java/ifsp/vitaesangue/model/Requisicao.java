@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @EntityListeners(HistoricoListener.class)
@@ -28,15 +29,14 @@ public class Requisicao {
     @JoinColumn(name = "hemocentro_id")
     private Hemocentro hemocentro;
 
-    @ManyToOne(targetEntity = Usuario.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Usuario.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_requerimento")
     private Usuario usuarioRequerimento;
 
-    @ManyToOne(targetEntity = Usuario.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Usuario.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_requerido")
     private Usuario usuarioRequerido;
 
-    @Column(name = "situacao")
     private String situacao;
 
     public Long getId() {
