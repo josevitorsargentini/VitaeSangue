@@ -1,6 +1,7 @@
 package ifsp.vitaesangue.model;
 
 import ifsp.vitaesangue.listener.HistoricoListener;
+import ifsp.vitaesangue.records.hospital.HospitalRecord;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +34,18 @@ public class Hospital {
 	@OneToOne(cascade  = CascadeType.ALL)
 	@JoinColumn(name = "estabelecimento_id") 
 	private Estabelecimento estabelecimento;
+	
+	 public static Hospital from(HospitalRecord record) {
+	        Hospital hospital = new Hospital();
+	        hospital.setCnes(record.cnes());
+	        hospital.setDiretorResponsavel(record.diretorResponsavel());
+	        hospital.setTipo(record.tipo());
 
+	        
+	        hospital.setEstabelecimento(Estabelecimento.from(record.estabelecimento()));
+	    
+	        return hospital;
+	    }
 	public Long getId() {
 		return id;
 	}

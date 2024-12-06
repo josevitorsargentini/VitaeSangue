@@ -1,6 +1,7 @@
 package ifsp.vitaesangue.model;
 
 import ifsp.vitaesangue.listener.HistoricoListener;
+import ifsp.vitaesangue.records.estabelecimento.EstabelecimentoRecord;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -27,14 +28,15 @@ public class Estabelecimento {
     
     public Estabelecimento() {
     }
-
-    public Estabelecimento(String nome, String email, Endereco endereco, boolean ativo) {
-        this.nome = nome;
-        this.email = email;
-        this.endereco = endereco;
-        this.ativo = ativo;
-    }
     
+    public static Estabelecimento from(EstabelecimentoRecord record) {
+        Estabelecimento estabelecimento = new Estabelecimento();
+        estabelecimento.setNome(record.nome());
+        estabelecimento.setEmail(record.email());
+        estabelecimento.setEndereco(record.endereco()); 
+        return estabelecimento;
+    }
+
     public Long getId() {
         return id;
     }
