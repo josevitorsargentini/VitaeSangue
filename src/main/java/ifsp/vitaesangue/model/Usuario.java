@@ -1,6 +1,7 @@
 package ifsp.vitaesangue.model;
 
 import ifsp.vitaesangue.listener.HistoricoListener;
+import ifsp.vitaesangue.records.usuario.UsuarioRecord;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -106,5 +107,16 @@ public class Usuario {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+    
+    public static Usuario from(UsuarioRecord usuarioRecord) {
+    	Usuario usuario = new Usuario();
+    	usuario.setCpf(usuarioRecord.cpf());
+    	usuario.setNome(usuarioRecord.nome());
+    	usuario.setEmail(usuarioRecord.email());
+    	usuario.setSenha(usuarioRecord.senha());
+    	usuario.setEndereco(usuarioRecord.endereco());
+    	
+    	return usuario;
     }
 }
