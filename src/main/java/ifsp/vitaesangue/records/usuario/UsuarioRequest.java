@@ -7,7 +7,6 @@ import ifsp.vitaesangue.model.Telefone;
 import ifsp.vitaesangue.records.telefone.TelefoneRequest;
 
 public class UsuarioRequest {
-	private Long id;
     private String cpf;
     private String nome;
     private String senha;
@@ -94,15 +93,5 @@ public class UsuarioRequest {
 	public void setTelefones(List<TelefoneRequest> telefones) {
 		this.telefones = telefones;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	
-    
+ 
 }

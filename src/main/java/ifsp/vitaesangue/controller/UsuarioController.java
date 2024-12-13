@@ -85,8 +85,13 @@ public class UsuarioController {
 	}
 	
 	@Transactional
-	@PutMapping("/")
-	public ResponseEntity<UsuarioResponse> edit(@RequestBody UsuarioUpdate usuarioUpdate) {
+	@PutMapping("/{id}")
+	public ResponseEntity<UsuarioResponse> edit(@PathVariable("id") Long id, @RequestBody UsuarioUpdate usuarioUpdate) {
+		
+		if (!id.equals(usuarioUpdate.getId())) {
+	        throw new RuntimeException("Os ID's informados nao correspondem");
+	    }
+		
 	    return usuarioRepository.findById(usuarioUpdate.getId())
 	        .map(usuarioEntity -> {
 	            // Busca as entidades
