@@ -1,7 +1,9 @@
 package ifsp.vitaesangue.model;
 
+import java.util.List;
+
 import ifsp.vitaesangue.listener.HistoricoListener;
-import ifsp.vitaesangue.records.usuario.UsuarioRecord;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -44,6 +47,9 @@ public class Usuario {
     @ManyToOne(targetEntity = Perfil.class)
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Telefone> telefones;
 
     public Long getId() {
         return id;
@@ -108,15 +114,14 @@ public class Usuario {
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
+
+	public List<Telefone> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
+	}
     
-    public static Usuario from(UsuarioRecord usuarioRecord) {
-    	Usuario usuario = new Usuario();
-    	usuario.setCpf(usuarioRecord.cpf());
-    	usuario.setNome(usuarioRecord.nome());
-    	usuario.setEmail(usuarioRecord.email());
-    	usuario.setSenha(usuarioRecord.senha());
-    	usuario.setEndereco(usuarioRecord.endereco());
-    	
-    	return usuario;
-    }
+    
 }

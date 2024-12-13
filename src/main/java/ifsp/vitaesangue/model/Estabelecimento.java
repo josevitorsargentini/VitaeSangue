@@ -1,7 +1,10 @@
 package ifsp.vitaesangue.model;
 
+import java.util.List;
+
 import ifsp.vitaesangue.listener.HistoricoListener;
 import ifsp.vitaesangue.records.estabelecimento.EstabelecimentoRecord;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -9,6 +12,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @EntityListeners(HistoricoListener.class) 
@@ -25,6 +29,9 @@ public class Estabelecimento {
     @Embedded
     private Endereco endereco;
     private boolean ativo;
+    
+    @OneToMany(mappedBy = "estabelecimento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Telefone> telefones;
     
     public Estabelecimento() {
     }
@@ -74,4 +81,18 @@ public class Estabelecimento {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+
+	public List<Telefone> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
+    
 }
