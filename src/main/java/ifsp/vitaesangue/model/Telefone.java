@@ -23,14 +23,6 @@ public class Telefone {
 	@Column(name = "telefone_id")
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "estabelecimento_id", nullable = true) 
-	private Estabelecimento estabelecimento;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = true)
-	private Usuario usuario;
-	
 	private int ddd;
 	
 	private int numero;
@@ -45,22 +37,6 @@ public class Telefone {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Estabelecimento getEstabelecimento() {
-		return estabelecimento;
-	}
-
-	public void setEstabelecimento(Estabelecimento estabelecimento) {
-		this.estabelecimento = estabelecimento;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	public int getDdd() {
