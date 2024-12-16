@@ -1,6 +1,7 @@
 package ifsp.vitaesangue.records.hospital;
 
 
+import ifsp.vitaesangue.model.Estabelecimento;
 import ifsp.vitaesangue.model.TipoHospital;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
@@ -17,19 +18,19 @@ public class HospitalRequest {
 	@Column(name = "diretor_responsavel")
 	private String diretorResponsavel;
 
-	private Long estabelecimentoId;
+	private Estabelecimento estabelecimento;
 
 	public HospitalRequest() {
 		super();
 	}
 
-	public HospitalRequest(Long id, String cnes, TipoHospital tipo, String diretorResponsavel, Long estabelecimentoId) {
+	public HospitalRequest(Long id, String cnes, TipoHospital tipo, String diretorResponsavel, Estabelecimento estabelecimento) {
 		super();
 		this.id = id;
 		this.cnes = cnes;
 		this.tipo = tipo;
 		this.diretorResponsavel = diretorResponsavel;
-		this.estabelecimentoId = estabelecimentoId;
+		this.estabelecimento = estabelecimento;
 	}
 
 	public Long getId() {
@@ -64,12 +65,12 @@ public class HospitalRequest {
 		this.diretorResponsavel = diretorResponsavel;
 	}
 
-	public Long getEstabelecimentoId() {
-		return estabelecimentoId;
+	public Estabelecimento getEstabelecimento() {
+		return estabelecimento;
 	}
 
-	public void setEstabelecimentoId(Long estabelecimentoId) {
-		this.estabelecimentoId = estabelecimentoId;
+	public void setEstabelecimento(Estabelecimento estabelecimento) {
+		this.estabelecimento = estabelecimento;
 	}
 
 }

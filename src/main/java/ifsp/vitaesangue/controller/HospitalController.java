@@ -59,7 +59,7 @@ public class HospitalController {
 
 		Hospital hospital = modelMapper.map(hospitalRequest, Hospital.class);
 
-		Estabelecimento estabelecimento = estabelecimentoRepository.findById(hospitalRequest.getEstabelecimentoId())
+		Estabelecimento estabelecimento = estabelecimentoRepository.findById(hospitalRequest.getEstabelecimento().getId())
 				.orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
 
 		hospital.setEstabelecimento(estabelecimento);
