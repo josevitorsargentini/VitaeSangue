@@ -39,14 +39,7 @@ public class Estabelecimento {
     public Estabelecimento() {
     }
     
-    public static Estabelecimento from(EstabelecimentoRecord record) {
-        Estabelecimento estabelecimento = new Estabelecimento();
-        estabelecimento.setNome(record.nome());
-        estabelecimento.setEmail(record.email());
-        estabelecimento.setEndereco(record.endereco()); 
-        return estabelecimento;
-    }
-
+ 
     public Long getId() {
         return id;
     }
