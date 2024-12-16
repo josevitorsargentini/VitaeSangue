@@ -81,7 +81,7 @@ public class HospitalController {
 
 		return hospitalRepository.findById(hospitalUpdate.getId()).map(hospitalEntity -> {
 
-			Estabelecimento estabelecimento = estabelecimentoRepository.findById(hospitalUpdate.getEstabelecimentoId())
+			Estabelecimento estabelecimento = estabelecimentoRepository.findById(hospitalUpdate.getEstabelecimento().getId())
 					.orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
 
 			modelMapper.map(hospitalUpdate, hospitalEntity);

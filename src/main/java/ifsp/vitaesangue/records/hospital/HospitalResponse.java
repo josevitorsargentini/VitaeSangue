@@ -27,20 +27,20 @@ public class HospitalResponse {
 
 	private String diretorResponsavel;
 
-	private Long estabelecimentoId;
+	private Estabelecimento estabelecimento;
 
 	public HospitalResponse() {
 		super();
 	}
 
 	public HospitalResponse(Long id, String cnes, TipoHospital tipo, String diretorResponsavel,
-			Long estabelecimentoId) {
+			Estabelecimento estabelecimento) {
 		super();
 		this.id = id;
 		this.cnes = cnes;
 		this.tipo = tipo;
 		this.diretorResponsavel = diretorResponsavel;
-		this.estabelecimentoId = estabelecimentoId;
+		this.estabelecimento = estabelecimento;
 	}
 
 	public Long getId() {
@@ -75,12 +75,12 @@ public class HospitalResponse {
 		this.diretorResponsavel = diretorResponsavel;
 	}
 
-	public Long getEstabelecimentoId() {
-		return estabelecimentoId;
+	public Estabelecimento getEstabelecimento() {
+		return estabelecimento;
 	}
 
-	public void setEstabelecimentoId(Long estabelecimentoId) {
-		this.estabelecimentoId = estabelecimentoId;
+	public void setEstabelecimento(Estabelecimento estabelecimento) {
+		this.estabelecimento = estabelecimento;
 	}
 
 	
