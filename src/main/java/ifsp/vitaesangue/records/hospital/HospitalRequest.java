@@ -18,19 +18,27 @@ public class HospitalRequest {
 	@Column(name = "diretor_responsavel")
 	private String diretorResponsavel;
 
-	private Estabelecimento estabelecimento;
+	private Long estabelecimentoId;
 
 	public HospitalRequest() {
 		super();
 	}
 
-	public HospitalRequest(Long id, String cnes, TipoHospital tipo, String diretorResponsavel, Estabelecimento estabelecimento) {
+	public HospitalRequest(Long id, String cnes, TipoHospital tipo, String diretorResponsavel, Long estabelecimentoId) {
 		super();
 		this.id = id;
 		this.cnes = cnes;
 		this.tipo = tipo;
 		this.diretorResponsavel = diretorResponsavel;
-		this.estabelecimento = estabelecimento;
+		this.estabelecimentoId = estabelecimentoId;
+	}
+
+	public Long getEstabelecimentoId() {
+		return estabelecimentoId;
+	}
+
+	public void setEstabelecimentoId(Long estabelecimentoId) {
+		this.estabelecimentoId = estabelecimentoId;
 	}
 
 	public Long getId() {
@@ -65,12 +73,6 @@ public class HospitalRequest {
 		this.diretorResponsavel = diretorResponsavel;
 	}
 
-	public Estabelecimento getEstabelecimento() {
-		return estabelecimento;
-	}
 
-	public void setEstabelecimento(Estabelecimento estabelecimento) {
-		this.estabelecimento = estabelecimento;
-	}
 
 }
