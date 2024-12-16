@@ -59,7 +59,7 @@ public class HospitalController {
 
 		Hospital hospital = modelMapper.map(hospitalRequest, Hospital.class);
 
-		Estabelecimento estabelecimento = estabelecimentoRepository.findById(hospitalRequest.getEstabelecimento().getId())
+		Estabelecimento estabelecimento = estabelecimentoRepository.findById(hospitalRequest.getEstabelecimentoId())
 				.orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
 
 		hospital.setEstabelecimento(estabelecimento);
@@ -73,7 +73,7 @@ public class HospitalController {
 	@Transactional
 	@PutMapping("/{id}")
 	public ResponseEntity<HospitalResponse> edit(@PathVariable("id") Long id,
-			@RequestBody HospitalResponse hospitalUpdate) {
+			@RequestBody HospitalRequest hospitalUpdate) {
 
 		if (!id.equals(hospitalUpdate.getId())) {
 			throw new RuntimeException("Os ID's informados nao correspondem");
@@ -81,7 +81,7 @@ public class HospitalController {
 
 		return hospitalRepository.findById(hospitalUpdate.getId()).map(hospitalEntity -> {
 
-			Estabelecimento estabelecimento = estabelecimentoRepository.findById(hospitalUpdate.getEstabelecimento().getId())
+			Estabelecimento estabelecimento = estabelecimentoRepository.findById(hospitalUpdate.getEstabelecimentoId())
 					.orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
 
 			modelMapper.map(hospitalUpdate, hospitalEntity);
