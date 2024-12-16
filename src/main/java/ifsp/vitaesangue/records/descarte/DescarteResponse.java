@@ -1,39 +1,42 @@
-package ifsp.vitaesangue.model;
+package ifsp.vitaesangue.records.descarte;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import ifsp.vitaesangue.listener.HistoricoListener;
+import ifsp.vitaesangue.model.Endereco;
+import ifsp.vitaesangue.model.Perfil;
+import ifsp.vitaesangue.records.estabelecimento.EstabelecimentoResponse;
+import ifsp.vitaesangue.records.estabelecimento.EstabelecimentoResponseRecord;
+import ifsp.vitaesangue.records.telefone.TelefoneResponse;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
-@Entity
-@EntityListeners(HistoricoListener.class) 
-public class Descarte {
+public class DescarteResponse {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "descarte_id")
-    private Long id;
+	private Long id;
 
-    @Column(name = "nome_profissional")
     private String nomeProfissional;
 
-    @Column(name = "cod_profissional")
     private String codProfissional;
 
     private String motivo;
-    
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "dt_descarte")
+
     private LocalDateTime dtDescarte;
 
-	public long getId() {
+	public DescarteResponse() {
+		super();
+	}
+
+	public DescarteResponse(Long id, String nomeProfissional, String codProfissional, String motivo,
+			LocalDateTime dtDescarte) {
+		super();
+		this.id = id;
+		this.nomeProfissional = nomeProfissional;
+		this.codProfissional = codProfissional;
+		this.motivo = motivo;
+		this.dtDescarte = dtDescarte;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
@@ -72,5 +75,8 @@ public class Descarte {
 	public void setDtDescarte(LocalDateTime dtDescarte) {
 		this.dtDescarte = dtDescarte;
 	}
-	
+
+   
+    
+    
 }
