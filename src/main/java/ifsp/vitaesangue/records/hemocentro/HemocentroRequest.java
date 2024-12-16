@@ -4,16 +4,16 @@ import ifsp.vitaesangue.model.Estabelecimento;
 
 public class HemocentroRequest {
     private Long id;
-    private Estabelecimento estabelecimento;
+    private Long estabelecimentoId;
 
     public HemocentroRequest() {
         super();
     }
 
-    public HemocentroRequest(Long id, Estabelecimento estabelecimento) {
+    public HemocentroRequest(Long id, Long estabelecimentoId) {
         super();
         this.id = id;
-        this.estabelecimento = estabelecimento;
+        this.estabelecimentoId = estabelecimentoId;
     }
 
     public Long getId() {
@@ -24,11 +24,11 @@ public class HemocentroRequest {
         this.id = id;
     }
 
-    public Estabelecimento getEstabelecimento() {
-        return estabelecimento;
+    public Long getEstabelecimentoId() {
+        return estabelecimentoId;
     }
 
-    public void setEstabelecimento(Estabelecimento estabelecimento) {
-        this.estabelecimento = estabelecimento;
+    public void setEstabelecimentoId(Long estabelecimentoId) {
+        this.estabelecimentoId = estabelecimentoId;
     }
 }

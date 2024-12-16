@@ -60,7 +60,7 @@ public class HemocentroController {
 		
 		Hemocentro hemocentro = modelMapper.map(hemocentroRequest, Hemocentro.class);
 		
-		Estabelecimento estabelecimento = estabelecimentoRepository.findById(hemocentroRequest.getEstabelecimento().getId())
+		Estabelecimento estabelecimento = estabelecimentoRepository.findById(hemocentroRequest.getEstabelecimentoId())
 				.orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
 		
 		hemocentro.setEstabelecimento(estabelecimento);
@@ -73,7 +73,7 @@ public class HemocentroController {
 	@Transactional
 	@PutMapping("/{id}")
 	public ResponseEntity<HemocentroResponse> edit(@PathVariable("id") Long id,
-	        @RequestBody HemocentroResponse hemocentroUpdate) {
+	        @RequestBody HemocentroRequest hemocentroUpdate) {
 
 	    if (!id.equals(hemocentroUpdate.getId())) {
 	        throw new RuntimeException("Os ID's informados nao correspondem");
@@ -81,7 +81,7 @@ public class HemocentroController {
 
 	    return hemocentroRepository.findById(hemocentroUpdate.getId()).map(hemocentroEntity -> {
 
-	        Estabelecimento estabelecimento = estabelecimentoRepository.findById(hemocentroUpdate.getEstabelecimento().getId())
+	        Estabelecimento estabelecimento = estabelecimentoRepository.findById(hemocentroUpdate.getEstabelecimentoId())
 	                .orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
 
 	        modelMapper.map(hemocentroUpdate, hemocentroEntity);
