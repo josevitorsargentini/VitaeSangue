@@ -1,22 +1,35 @@
 package ifsp.vitaesangue.controller;
 
-import java.util.List;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+
 
 import ifsp.vitaesangue.model.Estabelecimento;
 import ifsp.vitaesangue.model.Hemocentro;
+import ifsp.vitaesangue.records.hemocentro.HemocentroRequest;
+import ifsp.vitaesangue.records.hemocentro.HemocentroResponse;
 import ifsp.vitaesangue.repository.EstabelecimentoRepository;
 import ifsp.vitaesangue.repository.HemocentroRepository;
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/hemocentro")
 public class HemocentroController {
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Autowired
 	private HemocentroRepository hemocentroRepository;
@@ -25,20 +38,66 @@ public class HemocentroController {
 	private EstabelecimentoRepository estabelecimentoRepository;
 	
 	@GetMapping
-	public List<Hemocentro> getAll() {
-		
-		return hemocentroRepository.findAll();
+	public ResponseEntity<Page<HemocentroResponse>> getAll(@PageableDefault(size = 10) Pageable pageable) {
+		var page = hemocentroRepository.findAll(pageable)
+				.map(hemocentro -> modelMapper.map(hemocentro, HemocentroResponse.class));
+		return ResponseEntity.ok(page);
 	}
 	
-	@PostMapping
-	public Hemocentro create(@RequestBody Hemocentro hemocentro) {
-		Estabelecimento estabelecimento = estabelecimentoRepository.findById(hemocentro.getEstabelecimento().getId())
-				.orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
+	@GetMapping("/{id}")
+	public ResponseEntity<HemocentroResponse> getById(@PathVariable("id") Long id) {
+	    Hemocentro hemocentro = hemocentroRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Hemocentro não encontrado"));
 
+	    HemocentroResponse hemocentroResponse = modelMapper.map(hemocentro, HemocentroResponse.class);
+
+	    return ResponseEntity.ok().body(hemocentroResponse);
+	}
+	
+	@Transactional
+	@PostMapping
+	public ResponseEntity<HemocentroResponse> create(@RequestBody HemocentroRequest hemocentroRequest) {
+		
+		Hemocentro hemocentro = modelMapper.map(hemocentroRequest, Hemocentro.class);
+		
+		Estabelecimento estabelecimento = estabelecimentoRepository.findById(hemocentroRequest.getEstabelecimento().getId())
+				.orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
+		
 		hemocentro.setEstabelecimento(estabelecimento);
 		
-		hemocentroRepository.save(hemocentro);
-		return hemocentro;
+		Hemocentro hemocentroEntity = hemocentroRepository.save(hemocentro);
+		
+		return ResponseEntity.ok().body(modelMapper.map(hemocentroEntity, HemocentroResponse.class));
+	}
+	
+	@Transactional
+	@PutMapping("/{id}")
+	public ResponseEntity<HemocentroResponse> edit(@PathVariable("id") Long id,
+	        @RequestBody HemocentroResponse hemocentroUpdate) {
+
+	    if (!id.equals(hemocentroUpdate.getId())) {
+	        throw new RuntimeException("Os ID's informados nao correspondem");
+	    }
+
+	    return hemocentroRepository.findById(hemocentroUpdate.getId()).map(hemocentroEntity -> {
+
+	        Estabelecimento estabelecimento = estabelecimentoRepository.findById(hemocentroUpdate.getEstabelecimento().getId())
+	                .orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
+
+	        modelMapper.map(hemocentroUpdate, hemocentroEntity);
+
+	        hemocentroEntity.setEstabelecimento(estabelecimento);
+
+	        Hemocentro hemocentroSaved = hemocentroRepository.save(hemocentroEntity);
+	        return ResponseEntity.ok().body(modelMapper.map(hemocentroSaved, HemocentroResponse.class));
+	    }).orElseThrow(() -> new RuntimeException("Hemocentro não encontrado"));
+	}
+	
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable("id") Long id) {
+
+		hemocentroRepository.deleteById(id);
+
 	}
 	
 }
