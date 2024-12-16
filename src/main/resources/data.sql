@@ -54,14 +54,14 @@ values
 -- Inserindo dados na tabela requisicao
 insert into requisicao (hospital_id, hemocentro_id, usuario_requerimento, usuario_requerido, situacao) 
 values 
-(1, 1, 1, 2, 'pendente'),
-(1, 1, 2, 1, 'aprovada');
+(1, 1, 1, 2, 'PENDENTE'),
+(1, 1, 2, 1, 'APROVADA');
 
 -- Inserindo dados na tabela bolsa_requisicao
 insert into bolsa_requisicao (requisicao_id, hemocomponente, abo, rh, qtd_requirida) 
 values 
-(1, 'Plasma', 'A', '+', 10),
-(2, 'Sangue', 'O', '-', 20);
+(1, 'PLASMA', 'A', '+', 10),
+(2, 'SANGUE', 'O', '-', 20);
 
 -- Inserindo dados na tabela entrega
 insert into entrega (requisicao_id, usuario_aprovador, usuario_recebedor, emergencia) 
@@ -82,10 +82,10 @@ values
 ('Profissional B', '67890', 'Descarte por contaminação', '2024-09-20');
 
 -- Inserindo dados na tabela bolsa_entrega
-insert into bolsa_entrega (entrega_id, hemocomponente, abo, rh, qtd_utilizada, utilizacao_id, qtd_descartada, descarte_id) 
+insert into bolsa_entrega (entrega_id, hemocomponente, abo, rh, qtd_utilizada, utilizacao_id, qtd_descarte, descarte_id) 
 values 
-(1, 'Plasma', 'A', '+', 5, 1, null,  null),
-(2, 'Sangue', 'O', '-', null, null, 1, 2);
+(1, 'PLASMA', 'A', '+', 5, 1, null,  null),
+(2, 'SANGUE', 'O', '-', null, null, 1, 2);
 
 -- Inserindo dados na tabela historico
 insert into historico (nome_tabela, registro_id, acao, usuario_id, dt_historico) 
