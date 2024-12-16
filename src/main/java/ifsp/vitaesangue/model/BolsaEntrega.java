@@ -5,14 +5,18 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @EntityListeners(HistoricoListener.class)
+@Table(name = "bolsa_entrega")
 public class BolsaEntrega {
 
     @Id
@@ -24,21 +28,26 @@ public class BolsaEntrega {
     @JoinColumn(name = "entrega_id")
     private Entrega entrega;
 
-    private String hemocomponente;
+    @Column(name = "hemocomponente")
+    @Enumerated(EnumType.STRING)
+   	private TipoHemocomponente hemocomponente;
 
-    private String abo;
+    @Column(name = "abo")
+    @Enumerated(EnumType.STRING)
+   	private TipoSangue abo;
 
+    @Column(name = "rh")
     private String rh;
 
     @Column(name = "qtd_utilizada")
-    private Integer quantidadeUtilizada;
+    private Integer qtdUtilizada;
 
     @ManyToOne(targetEntity = Utilizacao.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "utilizacao_id")
     private Utilizacao utilizacao;
 
-    @Column(name = "qtd_descartada")
-    private Integer quantidadeDescarte;
+    @Column(name = "qtd_descarte")
+    private Integer qtdDescarte;
 
     @ManyToOne(targetEntity = Descarte.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "descarte_id")
@@ -60,21 +69,22 @@ public class BolsaEntrega {
         this.entrega = entrega;
     }
 
-    public String getHemocomponente() {
-        return hemocomponente;
-    }
+    public TipoHemocomponente getHemocomponente() {
+		return hemocomponente;
+	}
 
-    public void setHemocomponente(String hemocomponente) {
-        this.hemocomponente = hemocomponente;
-    }
+	public void setHemocomponente(TipoHemocomponente hemocomponente) {
+		this.hemocomponente = hemocomponente;
+	}
 
-    public String getAbo() {
-        return abo;
-    }
+	public TipoSangue getAbo() {
+		return abo;
+	}
 
-    public void setAbo(String abo) {
-        this.abo = abo;
-    }
+	public void setAbo(TipoSangue abo) {
+		this.abo = abo;
+	}
+
 
     public String getRh() {
         return rh;
@@ -84,12 +94,12 @@ public class BolsaEntrega {
         this.rh = rh;
     }
 
-    public Integer getQuantidadeUtilizada() {
-        return quantidadeUtilizada;
+    public Integer getQtdUtilizada() {
+        return qtdUtilizada;
     }
 
-    public void setQuantidadeUtilizada(Integer quantidadeUtilizada) {
-        this.quantidadeUtilizada = quantidadeUtilizada;
+    public void setQtdUtilizada(Integer qtdUtilizada) {
+        this.qtdUtilizada = qtdUtilizada;
     }
 
     public Utilizacao getUtilizacao() {
@@ -100,12 +110,12 @@ public class BolsaEntrega {
         this.utilizacao = utilizacao;
     }
 
-    public Integer getQuantidadeDescarte() {
-        return quantidadeDescarte;
+    public Integer getQtdDescarte() {
+        return qtdDescarte;
     }
 
-    public void setQuantidadeDescarte(Integer quantidadeDescarte) {
-        this.quantidadeDescarte = quantidadeDescarte;
+    public void setQtdDescarte(Integer qtdDescarte) {
+        this.qtdDescarte = qtdDescarte;
     }
 
     public Descarte getDescarte() {

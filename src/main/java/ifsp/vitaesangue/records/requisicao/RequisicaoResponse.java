@@ -22,7 +22,7 @@ public class RequisicaoResponse {
 	}
 	
 	public RequisicaoResponse(Long id, HospitalIdentificacaoResponse hospital, HemocentroIdentificacaoResponse hemocentro, UsuarioIdentificacaoResponse usuarioRequerido,
-			UsuarioIdentificacaoResponse  usuarioRequerente, SituacaoRequisicao situacao) {
+			UsuarioIdentificacaoResponse  usuarioRequerente, SituacaoRequisicao situacao, List<BolsaRequisicaoResponse> bolsas) {
 		super();
 		this.id = id;
 		this.hospital = hospital;
@@ -30,6 +30,7 @@ public class RequisicaoResponse {
 		this.usuarioRequerido = usuarioRequerido;
 		this.usuarioRequerimento = usuarioRequerente;
 		this.situacao = situacao;
+		this.bolsas = bolsas;
 	}
 
 	public Long getId() {
