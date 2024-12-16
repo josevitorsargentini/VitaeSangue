@@ -16,13 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import ifsp.vitaesangue.model.Estabelecimento;
-import ifsp.vitaesangue.model.Hospital;
 import ifsp.vitaesangue.model.Perfil;
 import ifsp.vitaesangue.model.Usuario;
-import ifsp.vitaesangue.records.hospital.HospitalRecord;
-import ifsp.vitaesangue.records.hospital.HospitalResponseRecord;
 import ifsp.vitaesangue.records.usuario.UsuarioRequest;
 import ifsp.vitaesangue.records.usuario.UsuarioResponse;
 import ifsp.vitaesangue.records.usuario.UsuarioUpdate;
