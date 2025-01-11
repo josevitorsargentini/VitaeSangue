@@ -1,12 +1,18 @@
 package ifsp.vitaesangue.model;
 
+import java.util.List;
+
 import ifsp.vitaesangue.listener.HistoricoListener;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +27,11 @@ public class Perfil {
 
     @Column(name = "nome")
     private String nome;
+    
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "perfil_id",  nullable = false)
+    private List<Permissao> permissoes;
 
     public Long getId() {
         return id;
@@ -37,5 +48,13 @@ public class Perfil {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+	public List<Permissao> getPermissoes() {
+		return permissoes;
+	}
+
+	public void setPermissoes(List<Permissao> permissoes) {
+		this.permissoes = permissoes;
+	}
    
 }

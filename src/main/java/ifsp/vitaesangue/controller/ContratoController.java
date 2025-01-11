@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ifsp.vitaesangue.annotations.RequiredPermission;
 import ifsp.vitaesangue.model.Contrato;
 import ifsp.vitaesangue.model.Estabelecimento;
 import ifsp.vitaesangue.model.Hemocentro;
 import ifsp.vitaesangue.model.Hospital;
 import ifsp.vitaesangue.model.Perfil;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.model.Usuario;
 import ifsp.vitaesangue.records.contrato.ContratoRequest;
 import ifsp.vitaesangue.records.contrato.ContratoResponse;
@@ -57,12 +60,14 @@ public class ContratoController {
 	private UsuarioRepository usuarioRepository;
 	
 	@GetMapping
+	@RequiredPermission(resource = ResourcesAllow.CONTRATO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<Page<ContratoResponse>> getAll(@PageableDefault(size = 10) Pageable pageable) {
 		var page = contratoRepository.findAll(pageable).map(contrato -> modelMapper.map(contrato, ContratoResponse.class));
 		return ResponseEntity.ok(page);
 	}
 
 	@GetMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.CONTRATO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<ContratoResponse> getById(@PathVariable("id") Long id) {
 		Contrato contrato = contratoRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("contrato não encontrado"));
@@ -74,6 +79,7 @@ public class ContratoController {
 	
 	@Transactional
 	@PostMapping
+	@RequiredPermission(resource = ResourcesAllow.CONTRATO, action = TipoAcaoHistorico.CREATE)
 	public ResponseEntity<ContratoResponse> create(@RequestBody ContratoRequest contratoRequest) {
 
 		Contrato contrato = modelMapper.map(contratoRequest, Contrato.class);
@@ -104,7 +110,9 @@ public class ContratoController {
 		return ResponseEntity.ok().body(modelMapper.map(contratoEntity, ContratoResponse.class));
 	}
 	
+	@Transactional
 	@DeleteMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.CONTRATO, action = TipoAcaoHistorico.DELETE)
 	public void  delete(@PathVariable("id") Long id) {
 		
 		contratoRepository.deleteById(id);

@@ -42,10 +42,10 @@ create table permissao (
 	permissao_id int primary key auto_increment,
 	perfil_id int not null,
     controller varchar(80) not null,
-    endpoint varchar(80) not null,
     criacao boolean, 
     visualizacao boolean, 
     atualizacao boolean,
+    deletar boolean,
     FOREIGN KEY (perfil_id) REFERENCES perfil(perfil_id) on update cascade
 ); 
 

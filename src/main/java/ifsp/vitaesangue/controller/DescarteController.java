@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import ifsp.vitaesangue.annotations.RequiredPermission;
 import ifsp.vitaesangue.model.Descarte;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.records.descarte.DescarteResponse;
 import ifsp.vitaesangue.repository.DescarteRepository;
 import jakarta.transaction.Transactional;
@@ -31,6 +35,7 @@ public class DescarteController {
 	private DescarteRepository descarteRepository;
 
 	@GetMapping
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_DESCARTE, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<Page<DescarteResponse>> getAll(@PageableDefault(size = 10) Pageable pageable) {
 		var page = descarteRepository.findAll(pageable)
 				.map(descarte -> modelMapper.map(descarte, DescarteResponse.class));
@@ -38,6 +43,7 @@ public class DescarteController {
 	}
 
 	@GetMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_DESCARTE, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<DescarteResponse> getById(@PathVariable("id") Long id) {
 		Descarte descarte = descarteRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Descarte não encontrado"));
@@ -49,6 +55,7 @@ public class DescarteController {
 
 	@Transactional
 	@PostMapping
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_DESCARTE, action = TipoAcaoHistorico.CREATE)
 	public ResponseEntity<DescarteResponse> create(@RequestBody DescarteResponse descarteResponse) {
 
 		Descarte descarte = modelMapper.map(descarteResponse, Descarte.class);
@@ -58,6 +65,7 @@ public class DescarteController {
 
 	@Transactional
 	@PutMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_DESCARTE, action = TipoAcaoHistorico.UPDATE)
 	public ResponseEntity<DescarteResponse> edit(@PathVariable("id") Long id,
 			@RequestBody DescarteResponse descarteUpdate) {
 
@@ -74,7 +82,9 @@ public class DescarteController {
 		}).orElseThrow(() -> new RuntimeException("Descarte não encontrado"));
 	}
 
+	@Transactional
 	@DeleteMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_DESCARTE, action = TipoAcaoHistorico.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 
 		descarteRepository.deleteById(id);

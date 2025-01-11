@@ -18,16 +18,29 @@ values
 ('Operador');
 
 -- Inserindo dados na tabela permissao
-insert into permissao (perfil_id, controller, endpoint, criacao, visualizacao, atualizacao) 
+insert into permissao (perfil_id, controller, criacao, visualizacao, atualizacao, deletar) 
 values 
-(1, 'usuario', '/usuario', true, true, true),
-(2, 'usuario', '/usuario', false, true, false);
+(1, 'USUARIO', true, true, true, true),
+(1, 'USUARIO', true, true, true, true),
+(1, 'BOLSA_REQUISICAO', true, true, true, true),
+(1, 'BOLSA_ENTREGA', true, true, true, true),
+(1, 'CONTRATO', true, true, true, true),
+(1, 'BOLSA_DESCARTE', true, true, true, true),
+(1, 'ESTABELECIMENTO', true, true, true, true),
+(1, 'HEMOCENTRO', true, true, true, true),
+(1, 'HISTORICO', true, true, true, true),
+(1, 'HOSPITAL', true, true, true, true),
+(1, 'PERFIL', true, true, true, true),
+(1, 'SOLICITACAO_ACESSO', true, true, true, true),
+(1, 'BOLSA_UTILIZACAO', true, true, true, true),
+(2, 'USUARIO', false, true, false, false);
 
 -- Inserindo dados na tabela usuario
 insert into usuario (cpf, nome, email, senha, cep, cidade, estado, bairro, logradouro, numero, estabelecimento_id, perfil_id) 
 values 
 ('12345678901', 'João Silva', 'joao@exemplo.com', 'senha123', '12345-678', 'Cidade A', 'Sao Paulo', 'Bairro A', 'Rua A', '123', 1, 1),
-('98765432100', 'Maria Oliveira', 'maria@exemplo.com', 'senha456', '98765-432', 'Cidade B', 'Sao Paulo', 'Bairro B', 'Rua B', '456', 2, 2);
+('98765432100', 'Maria Oliveira', 'maria@exemplo.com', 'senha456', '98765-432', 'Cidade B', 'Sao Paulo', 'Bairro B', 'Rua B', '456', 2, 2),
+('12345678900', 'João da Silva', 'admin@gmail.com', '$2a$10$2d5QfJJABSqD4is41yUulu5bJ2Vo3tUa6kUGoiVigcZPRz6KJuC.m', '12345-678', 'São Paulo', 'São Paulo', 'Centro', 'Rua da Administração', '1000', 1, 1);
 
 -- Inserindo dados na tabela telefone
 INSERT INTO telefone (estabelecimento_id, usuario_id, ddd, numero, whatsapp, descricao)

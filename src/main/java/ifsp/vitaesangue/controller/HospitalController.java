@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+
+import ifsp.vitaesangue.annotations.RequiredPermission;
 import ifsp.vitaesangue.model.Estabelecimento;
 import ifsp.vitaesangue.model.Hospital;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.records.hospital.HospitalRequest;
 import ifsp.vitaesangue.records.hospital.HospitalResponse;
 import ifsp.vitaesangue.repository.EstabelecimentoRepository;
@@ -36,6 +40,7 @@ public class HospitalController {
 	private EstabelecimentoRepository estabelecimentoRepository;
 
 	@GetMapping
+	@RequiredPermission(resource = ResourcesAllow.HOSPITAL, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<Page<HospitalResponse>> getAll(@PageableDefault(size = 10) Pageable pageable) {
 		var page = hospitalRepository.findAll(pageable)
 				.map(hospital -> modelMapper.map(hospital, HospitalResponse.class));
@@ -43,6 +48,7 @@ public class HospitalController {
 	}
 
 	@GetMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.HOSPITAL, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<HospitalResponse> getById(@PathVariable("id") Long id) {
 		Hospital hospital = hospitalRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Hospital não encontrado"));
@@ -55,6 +61,7 @@ public class HospitalController {
 	
 	@Transactional
 	@PostMapping
+	@RequiredPermission(resource = ResourcesAllow.HOSPITAL, action = TipoAcaoHistorico.CREATE)
 	public ResponseEntity<HospitalResponse> create(@RequestBody HospitalRequest hospitalRequest) {
 
 		Hospital hospital = modelMapper.map(hospitalRequest, Hospital.class);
@@ -72,6 +79,7 @@ public class HospitalController {
 
 	@Transactional
 	@PutMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.HOSPITAL, action = TipoAcaoHistorico.UPDATE)
 	public ResponseEntity<HospitalResponse> edit(@PathVariable("id") Long id,
 			@RequestBody HospitalRequest hospitalUpdate) {
 
@@ -94,6 +102,8 @@ public class HospitalController {
 	}
 
 	@DeleteMapping("/{id}")
+	@Transactional
+	@RequiredPermission(resource = ResourcesAllow.HOSPITAL, action = TipoAcaoHistorico.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 
 		hospitalRepository.deleteById(id);

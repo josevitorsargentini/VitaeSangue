@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import ifsp.vitaesangue.annotations.RequiredPermission;
 import ifsp.vitaesangue.model.Historico;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.model.Usuario;
 import ifsp.vitaesangue.records.historico.HistoricoResponse;
 import ifsp.vitaesangue.records.usuario.UsuarioResponse;
@@ -54,11 +57,12 @@ public class HistoricoController {
 		
 	
 	@GetMapping("/{entidade}/{id}")
+	@RequiredPermission(resource = ResourcesAllow.HISTORICO, action = TipoAcaoHistorico.READ)
 	public List<HistoricoResponse> getAll(@PathVariable("entidade") String entidade, @PathVariable("id") Long id) {
 		String tabela = TABELAS_BD.get(entidade.toLowerCase());
 
 	    if (tabela.isEmpty() || tabela.isBlank()) {
-	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entidade não encontrada");
+	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entidade nï¿½o encontrada");
 	    }
 		
 	    List<Historico> historicos = historicoRepository.findByNomeTabelaAndRegistroId(tabela, id);

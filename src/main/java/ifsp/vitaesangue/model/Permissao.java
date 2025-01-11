@@ -2,6 +2,8 @@ package ifsp.vitaesangue.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,16 +21,10 @@ public class Permissao {
     @Column(name = "permissao_id")
     private Long id;
 
-    @ManyToOne(targetEntity = Perfil.class)
-    @JoinColumn(name = "perfil_id")
-    private Perfil perfil;
-
     @Column(name = "controller")
-    private String controller;
-
-    @Column(name = "endpoint")
-    private String endpoint;
-
+    @Enumerated(EnumType.STRING)
+    private ResourcesAllow controller;
+    
     @Column(name = "criacao")
     private Boolean criacao;
 
@@ -37,6 +33,9 @@ public class Permissao {
 
     @Column(name = "atualizacao")
     private Boolean atualizacao;
+    
+    @Column(name = "deletar")
+    private Boolean deletar;
 
     public Long getId() {
         return id;
@@ -46,28 +45,12 @@ public class Permissao {
         this.id = id;
     }
 
-    public Perfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
-    }
-
-    public String getController() {
+    public ResourcesAllow getController() {
         return controller;
     }
 
-    public void setController(String controller) {
+    public void setController(ResourcesAllow controller) {
         this.controller = controller;
-    }
-
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
     }
 
     public Boolean getCriacao() {
@@ -93,5 +76,14 @@ public class Permissao {
     public void setAtualizacao(Boolean atualizacao) {
         this.atualizacao = atualizacao;
     }
+
+	public Boolean getDeletar() {
+		return deletar;
+	}
+
+	public void setDeletar(Boolean deletar) {
+		this.deletar = deletar;
+	}
+
     
 }

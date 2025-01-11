@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ifsp.vitaesangue.annotations.RequiredPermission;
 import ifsp.vitaesangue.model.Hemocentro;
 import ifsp.vitaesangue.model.Hospital;
 import ifsp.vitaesangue.model.Requisicao;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.model.Usuario;
 import ifsp.vitaesangue.records.requisicao.RequisicaoRequest;
 import ifsp.vitaesangue.records.requisicao.RequisicaoResponse;
@@ -48,12 +51,14 @@ public class RequisicaoController {
 	private UsuarioRepository usuarioRepository;
 	
 	@GetMapping
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_REQUISICAO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<Page<RequisicaoResponse>> getAll(@PageableDefault(size = 10) Pageable pageable) {
 		var page = requisicaoRepository.findAll(pageable).map(requisicao -> modelMapper.map(requisicao, RequisicaoResponse.class));
 		return ResponseEntity.ok(page);
 	}
 	
 	@GetMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_REQUISICAO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<RequisicaoResponse> getById(@PathVariable("id") Long id) {
 		Requisicao requisicao = requisicaoRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Requisição não encontrada"));
@@ -65,6 +70,7 @@ public class RequisicaoController {
 	
 	@Transactional
 	@PostMapping
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_REQUISICAO, action = TipoAcaoHistorico.CREATE)
 	public ResponseEntity<RequisicaoResponse> create(@RequestBody RequisicaoRequest requisicaoRequest) {
 		
 		Requisicao requisicao = modelMapper.map(requisicaoRequest, Requisicao.class);
@@ -98,6 +104,7 @@ public class RequisicaoController {
 	
 	@Transactional
 	@PutMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_REQUISICAO, action = TipoAcaoHistorico.UPDATE)
 	public ResponseEntity<RequisicaoResponse> edit(@PathVariable("id") Long id, @RequestBody RequisicaoUpdate requisicaoUpdate) {
 		
 		if (!id.equals(requisicaoUpdate.getId())) {
@@ -122,6 +129,7 @@ public class RequisicaoController {
 	
 	@Transactional
 	@DeleteMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_REQUISICAO, action = TipoAcaoHistorico.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 		
 		requisicaoRepository.deleteById(id);

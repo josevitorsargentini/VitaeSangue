@@ -15,9 +15,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 
-
+import ifsp.vitaesangue.annotations.RequiredPermission;
 import ifsp.vitaesangue.model.Estabelecimento;
 import ifsp.vitaesangue.model.Hemocentro;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.records.hemocentro.HemocentroRequest;
 import ifsp.vitaesangue.records.hemocentro.HemocentroResponse;
 import ifsp.vitaesangue.repository.EstabelecimentoRepository;
@@ -38,6 +40,7 @@ public class HemocentroController {
 	private EstabelecimentoRepository estabelecimentoRepository;
 	
 	@GetMapping
+	@RequiredPermission(resource = ResourcesAllow.HEMOCENTRO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<Page<HemocentroResponse>> getAll(@PageableDefault(size = 10) Pageable pageable) {
 		var page = hemocentroRepository.findAll(pageable)
 				.map(hemocentro -> modelMapper.map(hemocentro, HemocentroResponse.class));
@@ -45,6 +48,7 @@ public class HemocentroController {
 	}
 	
 	@GetMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.HEMOCENTRO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<HemocentroResponse> getById(@PathVariable("id") Long id) {
 	    Hemocentro hemocentro = hemocentroRepository.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Hemocentro não encontrado"));
@@ -56,6 +60,7 @@ public class HemocentroController {
 	
 	@Transactional
 	@PostMapping
+	@RequiredPermission(resource = ResourcesAllow.HEMOCENTRO, action = TipoAcaoHistorico.CREATE)
 	public ResponseEntity<HemocentroResponse> create(@RequestBody HemocentroRequest hemocentroRequest) {
 		
 		Hemocentro hemocentro = modelMapper.map(hemocentroRequest, Hemocentro.class);
@@ -72,6 +77,7 @@ public class HemocentroController {
 	
 	@Transactional
 	@PutMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.HEMOCENTRO, action = TipoAcaoHistorico.UPDATE)
 	public ResponseEntity<HemocentroResponse> edit(@PathVariable("id") Long id,
 	        @RequestBody HemocentroRequest hemocentroUpdate) {
 
@@ -94,6 +100,8 @@ public class HemocentroController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@Transactional
+	@RequiredPermission(resource = ResourcesAllow.HEMOCENTRO, action = TipoAcaoHistorico.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 
 		hemocentroRepository.deleteById(id);

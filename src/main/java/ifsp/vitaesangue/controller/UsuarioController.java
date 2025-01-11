@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import ifsp.vitaesangue.annotations.RequiredPermission;
+import ifsp.vitaesangue.config.SecurityConfiguration;
 import ifsp.vitaesangue.model.Estabelecimento;
 import ifsp.vitaesangue.model.Perfil;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.model.Usuario;
 import ifsp.vitaesangue.records.usuario.UsuarioRequest;
 import ifsp.vitaesangue.records.usuario.UsuarioResponse;
@@ -42,14 +47,19 @@ public class UsuarioController {
 
 	@Autowired
 	private EstabelecimentoRepository estabelecimentoRepository;
+	
+    @Autowired
+    private SecurityConfiguration securityConfiguration;
 
 	@GetMapping
+	@RequiredPermission(resource = ResourcesAllow.USUARIO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<Page<UsuarioResponse>> getAll(@PageableDefault(size = 10) Pageable pageable) {
 		var page = usuarioRepository.findAll(pageable).map(usuario -> modelMapper.map(usuario, UsuarioResponse.class));
 		return ResponseEntity.ok(page);
 	}
 
 	@GetMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.USUARIO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<UsuarioResponse> getById(@PathVariable("id") Long id) {
 		Usuario usuario = usuarioRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -61,6 +71,7 @@ public class UsuarioController {
 
 	@Transactional
 	@PostMapping
+	@RequiredPermission(resource = ResourcesAllow.USUARIO, action = TipoAcaoHistorico.CREATE)
 	public ResponseEntity<UsuarioResponse> create(@RequestBody UsuarioRequest usuarioRequest) {
 
 		Usuario usuario = modelMapper.map(usuarioRequest, Usuario.class);
@@ -74,6 +85,8 @@ public class UsuarioController {
 				.orElseThrow(() -> new RuntimeException("Perfil não encontrado"));
 
 		usuario.setPerfil(perfil);
+		
+		usuario.setSenha(gerarHashSenha(usuarioRequest.getSenha()));
 
 		Usuario usuarioEntity = usuarioRepository.save(usuario);
 
@@ -82,6 +95,7 @@ public class UsuarioController {
 	
 	@Transactional
 	@PutMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.USUARIO, action = TipoAcaoHistorico.UPDATE)
 	public ResponseEntity<UsuarioResponse> edit(@PathVariable("id") Long id, @RequestBody UsuarioUpdate usuarioUpdate) {
 		
 		if (!id.equals(usuarioUpdate.getId())) {
@@ -103,6 +117,8 @@ public class UsuarioController {
 	            // Define manualmente as relações
 	            usuarioEntity.setEstabelecimento(estabelecimento);
 	            usuarioEntity.setPerfil(perfil);
+	            
+	            usuarioEntity.setSenha(gerarHashSenha(usuarioUpdate.getSenha()));
 
 	            Usuario usuarioSaved = usuarioRepository.save(usuarioEntity);
 	            return ResponseEntity.ok().body(modelMapper.map(usuarioSaved, UsuarioResponse.class));
@@ -112,10 +128,15 @@ public class UsuarioController {
 	
 	@Transactional
 	@DeleteMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.USUARIO, action = TipoAcaoHistorico.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 
 		usuarioRepository.deleteById(id);
 
+	}
+	
+	private String gerarHashSenha(String senha) {
+		return securityConfiguration.passwordEncoder().encode(senha);
 	}
 
 }

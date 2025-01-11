@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ifsp.vitaesangue.annotations.RequiredPermission;
+import ifsp.vitaesangue.model.ResourcesAllow;
 import ifsp.vitaesangue.model.SolicitacaoAcesso;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.records.solicitacaoacesso.SolicitacaoAcessoRequest;
 import ifsp.vitaesangue.records.solicitacaoacesso.SolicitacaoAcessoResponse;
 import ifsp.vitaesangue.repository.SolicitacaoAcessoRepository;
@@ -39,6 +42,7 @@ public class SolicitacaoAcessoController {
 	}
 	
 	@GetMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.SOLICITACAO_ACESSO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<SolicitacaoAcessoResponse> getById(@PathVariable("id") Long id) {
 		SolicitacaoAcesso solicitacao = solicitacaoAcessoRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Solicitacao não encontrado"));
@@ -62,6 +66,7 @@ public class SolicitacaoAcessoController {
 	
 	@Transactional
 	@DeleteMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.SOLICITACAO_ACESSO, action = TipoAcaoHistorico.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 
 		solicitacaoAcessoRepository.deleteById(id);

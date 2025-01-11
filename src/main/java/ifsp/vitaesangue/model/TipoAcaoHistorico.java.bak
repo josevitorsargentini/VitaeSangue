@@ -1,5 +1,5 @@
 package ifsp.vitaesangue.model;
 
 public enum TipoAcaoHistorico {
-	READ, CREATE, UPDATE, DELETE
+	CREATE, UPDATE, DELETE
 }

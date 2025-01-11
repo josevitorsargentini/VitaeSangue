@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import ifsp.vitaesangue.annotations.RequiredPermission;
 import ifsp.vitaesangue.model.Estabelecimento;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.records.estabelecimento.EstabelecimentoResponse;
 import ifsp.vitaesangue.records.estabelecimento.EstabelecimentoUpdate;
 import ifsp.vitaesangue.repository.EstabelecimentoRepository;
@@ -34,12 +38,14 @@ public class EstabelecimentoController {
 	private EstabelecimentoRepository estabelecimentoRepository;
 	
 	@GetMapping
+	@RequiredPermission(resource = ResourcesAllow.ESTABELECIMENTO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<Page<EstabelecimentoResponse>> getAll(@PageableDefault(size = 10) Pageable pageable) {
 		var page = estabelecimentoRepository.findAll(pageable).map(estabelecimento -> modelMapper.map(estabelecimento, EstabelecimentoResponse.class));
 		return ResponseEntity.ok(page);
 	}
 	
 	@GetMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.ESTABELECIMENTO, action = TipoAcaoHistorico.READ)
 	public ResponseEntity<EstabelecimentoResponse> getById(@PathVariable("id") Long id) {
 		Estabelecimento estabelecimento = estabelecimentoRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
@@ -50,6 +56,8 @@ public class EstabelecimentoController {
 	}
 	
 	@PostMapping
+	@Transactional
+	@RequiredPermission(resource = ResourcesAllow.ESTABELECIMENTO, action = TipoAcaoHistorico.CREATE)
 	public Estabelecimento create(@RequestBody Estabelecimento estabelecimento) {
 		
 		estabelecimentoRepository.save(estabelecimento);
@@ -58,6 +66,7 @@ public class EstabelecimentoController {
 	
 	@Transactional
 	@PutMapping("/{id}")
+	@RequiredPermission(resource = ResourcesAllow.ESTABELECIMENTO, action = TipoAcaoHistorico.UPDATE)
 	public ResponseEntity<EstabelecimentoResponse> edit(@PathVariable("id") Long id, @RequestBody EstabelecimentoUpdate estabelecimentoUpdate) {
 		
 		if (!id.equals(estabelecimentoUpdate.getId())) {
@@ -74,6 +83,8 @@ public class EstabelecimentoController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@Transactional
+	@RequiredPermission(resource = ResourcesAllow.ESTABELECIMENTO, action = TipoAcaoHistorico.DELETE)
 	public void  delete(@PathVariable("id") Long id) {
 		
 		estabelecimentoRepository.deleteById(id);

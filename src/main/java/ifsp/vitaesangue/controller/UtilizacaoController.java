@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ifsp.vitaesangue.annotations.RequiredPermission;
+import ifsp.vitaesangue.model.ResourcesAllow;
+import ifsp.vitaesangue.model.TipoAcaoHistorico;
 import ifsp.vitaesangue.model.Utilizacao;
 import ifsp.vitaesangue.repository.UtilizacaoRepository;
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/utilizacao")
@@ -22,12 +26,15 @@ public class UtilizacaoController {
 	private UtilizacaoRepository utilizacaoRepository;
 	
 	@GetMapping
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_UTILIZACAO, action = TipoAcaoHistorico.READ)
 	public List<Utilizacao> getAll() {
 		
 		return utilizacaoRepository.findAll();
 	}
 	
 	@PostMapping
+	@Transactional
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_UTILIZACAO, action = TipoAcaoHistorico.CREATE)
 	public Utilizacao create(@RequestBody Utilizacao utilizacao) {
 		
 		utilizacaoRepository.save(utilizacao);
@@ -35,6 +42,8 @@ public class UtilizacaoController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@Transactional
+	@RequiredPermission(resource = ResourcesAllow.BOLSA_UTILIZACAO, action = TipoAcaoHistorico.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 		
 		utilizacaoRepository.deleteById(id);
